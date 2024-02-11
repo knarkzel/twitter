@@ -10,9 +10,14 @@ function Page(props: PropsWithChildren<{ title: string }>) {
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>{props.title}</title>
+          <meta name="color-scheme" content="light dark" />
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+          <title safe>{props.title}</title>
         </head>
-        <body>{props.children}</body>
+        <body>
+          <main class="container">{props.children}</main>
+          <script src="https://unpkg.com/htmx.org@2.0.0-alpha1/dist/htmx.min.js"></script>
+        </body>
       </html>
     </>
   );
@@ -21,15 +26,27 @@ function Page(props: PropsWithChildren<{ title: string }>) {
 const app = new Elysia()
   .use(html())
   .get("/", () => (
-    <Page title="Twitter">
+    <Page title="witter">
       <h1>Welcome to Twitter</h1>
-      <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-      </ul>
+      <form method="POST" action="/update" hx-swap="afterend" hx-post="/update">
+        <label for="name">
+          Name
+          <input name="name" />
+        </label>
+        <label for="content">
+          Content
+          <textarea name="content" />
+        </label>
+        <button type="submit">Get the data!</button>
+      </form>
     </Page>
+  ))
+  .post("/update", ({ body: { name, content }}) => (
+    <div>
+      <h1>{name}</h1>
+      <p>{content}</p>
+    </div>
   ))
   .listen(3000);
 
-console.log(`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`);
+console.log(`🌐 Started server at http://${app.server?.hostname}:${app.server?.port}`);
