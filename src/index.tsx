@@ -26,7 +26,7 @@ function Page(props: PropsWithChildren<{ title: string }>) {
 const app = new Elysia()
   .use(html())
   .get("/", () => (
-    <Page title="witter">
+    <Page title="Twitter">
       <h1>Welcome to Twitter</h1>
       <form method="POST" action="/update" hx-swap="afterend" hx-post="/update">
         <label for="name">
@@ -39,6 +39,7 @@ const app = new Elysia()
         </label>
         <button type="submit">Get the data!</button>
       </form>
+      <div></div>
     </Page>
   ))
   .post("/update", ({ body: { name, content }}) => (
