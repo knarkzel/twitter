@@ -8,8 +8,9 @@ This is an experiment testing out the BESH stack, namely:
 - HTMX
 
 For developer experience, following will be used:
-- Vercel for hosting
-- linear.app for project management
+
+- Vercel for hosting (and integration with Supabase)
+- linear.app for project management (and integration with GitHub)
 
 This is inspired by trying to figure out the easiest and most productive way for a 1-man team to build an app for production.
 Similar to what Ruby on Rails or Phoenix LiveView provides.
